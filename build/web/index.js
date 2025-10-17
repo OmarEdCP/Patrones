@@ -2,9 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
 
   form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Evita recargar la página
+    e.preventDefault();
 
-    // Obtener valores
     const nombre = document.getElementById("user").value.trim();
     const contrasenia = document.getElementById("pass").value.trim();
 
@@ -14,27 +13,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Llamar a tu servicio REST (ajusta la URL a tu backend)
-      const response = await fetch("http://localhost:8080/ProyectoArquitectura/api/login/validarLogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `nombre=${encodeURIComponent(nombre)}&contrasenia=${encodeURIComponent(contrasenia)}`,
-      });
+      // Validar login
+      const loginResponse = await fetch(
+        "http://localhost:8080/ProyectoArquitectura/api/login/validarLogin",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `nombre=${encodeURIComponent(nombre)}&contrasenia=${encodeURIComponent(contrasenia)}`
+        }
+      );
 
-      // Leer respuesta JSON
-      const data = await response.json();
+      const loginData = await loginResponse.json();
 
-      // Analizar respuesta
-      if (data.status === "success") {
-        alert(data.message);
-        // Redirigir si quieres
-        window.location.href = "./Dashboard.html";
-      } else if (data.status === "fail") {
-        alert( data.message);
+      if (loginData.status === "success") {
+        alert(loginData.message);
+
+        const userResponse = await fetch(
+          `http://localhost:8080/ProyectoArquitectura/api/usuario/getByName?nombreUsuario=${encodeURIComponent(nombre)}`
+        );
+
+        const userData = await userResponse.json();
+        console.log("Datos usuario:", userData);
+
+        if (userData && userData.idUsuario) {
+          localStorage.setItem("lastUser", JSON.stringify(userData));
+          window.location.href = "./Dashboard.html";
+        } else {
+          alert("Usuario no encontrado en la base de datos.");
+        }
+
       } else {
-        alert("️ Error: " + data.message);
+        alert(loginData.message || "Credenciales incorrectas");
       }
 
     } catch (error) {
@@ -43,5 +52,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-

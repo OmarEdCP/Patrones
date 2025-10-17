@@ -12,7 +12,7 @@ import patrones.db.MySQL;
  * @author Omar Eduardo Cordero Padierna
  */
 public class LoginController {
-      public boolean validar_usuario(String nombre, String contrasenia) throws Exception {
+    public boolean validar_usuario(String nombre, String contrasenia) throws Exception {
     MySQL conexion = new MySQL();
     Connection conn = conexion.open();
     CallableStatement stmt = null;

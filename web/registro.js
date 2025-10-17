@@ -13,40 +13,39 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Construimos el objeto del usuario
     const usuario = {
       nombreUsuario: nombre,
       email: email,
-      contrasenia: password,
+      contrasenia: password
     };
 
-    // Lo convertimos a JSON y lo mandamos como parte de un formulario
     const formData = new URLSearchParams();
     formData.append("datosUsuario", JSON.stringify(usuario));
 
     try {
-      const response = await fetch("http://localhost:8080/ProyectoArquitectura/api/usuario/insertUsuario", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData.toString(),
-      });
+      const response = await fetch(
+        "http://localhost:8080/ProyectoArquitectura/api/usuario/insertUsuario",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formData.toString()
+        }
+      );
 
-      if (response.ok) {
-        const data = await response.json();
-        alert("Usuario registrado correctamente: " + data.nombreUsuario);
-        form.reset();
-      } else {
-        const error = await response.text();
-        alert("Error en el servidor: " + error);
-      }
+      const data = await response.json();
+      console.log("Datos", data);
+
+    if (data.validate) {
+    alert(data.message);
+} else {
+    alert(data.message);
+}
+
     } catch (err) {
       console.error("Error al conectar con el backend:", err);
       alert("No se pudo conectar con el servidor.");
     }
   });
 });
-
-
-

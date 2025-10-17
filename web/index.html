@@ -1,129 +1,179 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Login</title>
-  <style>
-    :root{
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --accent: #6c63ff;
-      --muted: #6b7280;
-      --success: #10b981;
-      --shadow: 0 8px 24px rgba(22, 28, 37, 0.08);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Login</title>
+        <style>
+            :root{
+                --bg: #f4f7fb;
+                --card: #ffffff;
+                --accent: #6c63ff;
+                --muted: #6b7280;
+                --success: #10b981;
+                --shadow: 0 8px 24px rgba(22, 28, 37, 0.08);
+                font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:linear-gradient(180deg, var(--bg) 0%, #eef2ff 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:32px;
-      color:#111827;
-    }
+            *{
+                box-sizing:border-box
+            }
+            html,body{
+                height:100%
+            }
+            body{
+                margin:0;
+                background: linear-gradient(135deg, #0072ff, #00c6ff);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                padding:32px;
+                color:#111827;
+            }
 
-    .wrap{
-      width:100%;
-      max-width:420px;
-    }
+            .wrap{
+                width:100%;
+                max-width:420px;
+            }
 
-    .card{
-      background:var(--card);
-      border-radius:14px;
-      padding:28px;
-      box-shadow:var(--shadow);
-      transition:transform .18s ease;
-    }
-    .card:focus-within{transform:translateY(-4px)}
+            .card{
+                background:var(--card);
+                border-radius:14px;
+                padding:28px;
+                box-shadow:var(--shadow);
+                transition:transform .18s ease;
+            }
+            .card:focus-within{
+                transform:translateY(-4px)
+            }
 
-    h1{font-size:20px;margin:0 0 8px}
-    p.lead{margin:0 0 20px;color:var(--muted);font-size:14px}
+            h1{
+                font-size:20px;
+                margin:0 0 8px
+            }
+            p.lead{
+                margin:0 0 20px;
+                color:var(--muted);
+                font-size:14px
+            }
 
-    form{display:grid;gap:12px}
-    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-    input[type="text"],input[type="email"],input[type="password"]{
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      border:1px solid #e6e9ef;
-      font-size:14px;
-      outline:none;
-    }
-    input:focus{box-shadow:0 6px 18px rgba(108,99,255,0.12);border-color:rgba(108,99,255,0.28)}
+            form{
+                display:grid;
+                gap:12px
+            }
+            label{
+                font-size:13px;
+                color:var(--muted);
+                display:block;
+                margin-bottom:6px
+            }
+            input[type="text"],input[type="email"],input[type="password"]{
+                width:100%;
+                padding:10px 12px;
+                border-radius:8px;
+                border:1px solid #e6e9ef;
+                font-size:14px;
+                outline:none;
+            }
+            input:focus{
+                box-shadow:0 6px 18px rgba(108,99,255,0.12);
+                border-color:rgba(108,99,255,0.28)
+            }
 
-    .btn{
-      display:inline-block;
-      width:100%;
-      padding:10px 14px;
-      border-radius:10px;
-      border:0;
-      font-weight:600;
-      font-size:15px;
-      cursor:pointer;
-      background:linear-gradient(90deg,var(--accent), #4f46e5);
-      color:white;
-    }
+            .btn{
+                display:inline-block;
+                width:100%;
+                padding:10px 14px;
+                border-radius:10px;
+                border:0;
+                font-weight:600;
+                font-size:15px;
+                cursor:pointer;
+                background:linear-gradient(90deg,var(--accent), #4f46e5);
+                color:white;
+            }
 
-    .muted-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);}
-    .link{color:var(--accent);text-decoration:none;font-weight:600}
+            .muted-row{
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                font-size:13px;
+                color:var(--muted);
+            }
+            .link{
+                color:var(--accent);
+                text-decoration:none;
+                font-weight:600
+            }
 
-    /* Layout for the login/register as sections and CSS-only navigation using :target */
-    section{display:none}
-    /* Show default login when no fragment */
-    :root:not(:target) section#login{display:block}
-    /* Show target section */
-    section:target{display:block}
+            /* Layout for the login/register as sections and CSS-only navigation using :target */
+            section{
+                display:none
+            }
+            /* Show default login when no fragment */
+            :root:not(:target) section#login{
+                display:block
+            }
+            /* Show target section */
+            section:target{
+                display:block
+            }
 
-    /* small helper for cards inside sections */
-    .foot{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+            /* small helper for cards inside sections */
+            .foot{
+                margin-top:14px;
+                text-align:center;
+                font-size:13px;
+                color:var(--muted)
+            }
 
-    /* responsive */
-    @media (max-width:420px){
-      .card{padding:20px}
-    }
+            /* responsive */
+            @media (max-width:420px){
+                .card{
+                    padding:20px
+                }
+            }
 
-    /* simple form hints */
-    .note{font-size:12px;color:#9ca3af;margin-top:8px}
-  </style>
-</head>
-<body>
-  <div class="wrap">
+            /* simple form hints */
+            .note{
+                font-size:12px;
+                color:#9ca3af;
+                margin-top:8px
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
 
-    <!-- LOGIN SECTION (default) -->
-    <section id="login">
-      <div class="card" role="region" aria-labelledby="loginTitle">
-        <h1 id="loginTitle">Iniciar sesión</h1>
-        <p class="lead">Accede a tu cuenta introduciendo tus credenciales.</p>
+            <!-- LOGIN SECTION (default) -->
+            <section id="login">
+                <div class="card" role="region" aria-labelledby="loginTitle">
+                    <h1 id="loginTitle">Iniciar sesión</h1>
+                    <p class="lead">Accede a tu cuenta introduciendo tus credenciales.</p>
 
-        <form action="#" method="post" autocomplete="on">
-          <div>
-            <label for="user">Usuario</label>
-            <input id="user" name="user" type="text" placeholder="ej. pedro" required />
-          </div>
+                    <form action="#" method="post" autocomplete="on">
+                        <div>
+                            <label for="user">Usuario</label>
+                            <input id="user" name="user" type="text" placeholder="ej. pedro" required />
+                        </div>
 
-          <div>
-            <label for="pass">Contraseña</label>
-            <input id="pass" name="pass" type="password" placeholder="••••••••" required minlength="4" />
-          </div>
+                        <div>
+                            <label for="pass">Contraseña</label>
+                            <input id="pass" name="pass" type="password" placeholder="••••••••" required minlength="4" />
+                        </div>
+                        <button class="btn" type="submit">Entrar</button> 
+                        <div style="justify-self: center;margin: 0 0 -5px -5px" class="foot">
+                         ¿No tienes cuenta? <a class="link" href="./Registro.html">Crear cuenta</a>
+                        </div>
+                     
+                        <div class="foot">
+                          ¿Olvidaste tu contraseña? <a class="link" href="#">Recuperala</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
 
-          <div class="muted-row">
-            <label style="display:flex;align-items:center;font-size:13px"><input type="checkbox" name="remember" style="margin-right:8px"> Recuérdame</label>
-            <a class="link" href="./Registro.html">Crear cuenta</a>
-          </div>
-
-          <button class="btn" type="submit">Entrar</button>
-
-          <div class="foot">¿Olvidaste tu contraseña? <a class="link" href="#">Recuperarla</a></div>
-        </form>
-      </div>
-    </section>
-
-  </div>
-    <script src="index.js" type="text/javascript"></script>
-</body>
+        </div>
+        <script src="index.js" type="text/javascript"></script>
+    </body>
 </html>

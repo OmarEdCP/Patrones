@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
 import patrones.controlador.UsuarioController;
+import patrones.modelo.Message;
 import patrones.modelo.Usuario;
 
 /**
@@ -21,8 +22,8 @@ import patrones.modelo.Usuario;
  * @author Omar Eduardo Cordero Padierna
  */
 @Path("usuario")
-public class UsuarioRest extends Application{
-   
+public class UsuarioRest extends Application {
+
     @Path("insertUsuario")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,9 +32,9 @@ public class UsuarioRest extends Application{
             Gson gson = new Gson();
             UsuarioController uc = new UsuarioController();
             Usuario u = gson.fromJson(usuario, Usuario.class);
-             uc.insertUsuario(u);
-            String out = gson.toJson(u);
-            return Response.status(Response.Status.CREATED).entity(out).build();
+            Message result = uc.insertUsuario(u);
+            String json = gson.toJson(result);
+        return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -41,7 +42,7 @@ public class UsuarioRest extends Application{
                     .build();
         }
     }
-    
+
     @Path("getAllUsuario")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,7 +54,7 @@ public class UsuarioRest extends Application{
         try {
             uc = new UsuarioController();
             lista = uc.getAllUsuario();
-            
+
             out = gson.toJson(lista);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +64,55 @@ public class UsuarioRest extends Application{
         }
         return Response.ok(out).build();
     }
-    
+
+    @Path("getById")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getById(@QueryParam("idUsuario") int idUsuario) {
+        Gson gson = new Gson();
+        String out;
+        try {
+            UsuarioController uc = new UsuarioController();
+            Usuario usuario = uc.getUsuarioById(idUsuario);
+
+            if (usuario != null) {
+                out = gson.toJson(usuario);
+                return Response.ok(out).build();
+            } else {
+                out = "{\"result\":\"Usuario no encontrado\"}";
+                return Response.status(Response.Status.NOT_FOUND).entity(out).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"error\":\"Error en el servidor\"}";
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+        }
+    }
+
+    @Path("getByName")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getByName(@QueryParam("nombreUsuario") String nombreUsuario) {
+        Gson gson = new Gson();
+        String out;
+        try {
+            UsuarioController uc = new UsuarioController();
+            Usuario usuario = uc.getUsuarioByName(nombreUsuario);
+
+            if (usuario != null) {
+                out = gson.toJson(usuario);
+                return Response.ok(out).build();
+            } else {
+                out = "{\"result\":\"Usuario no encontrado\"}";
+                return Response.status(Response.Status.NOT_FOUND).entity(out).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"error\":\"Error en el servidor\"}";
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(out).build();
+        }
+    }
+
     @Path("updateUsuario")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,11 +124,10 @@ public class UsuarioRest extends Application{
         try {
             uc = new UsuarioController();
             u = gson.fromJson(datosUsuario, Usuario.class);
-            uc.updateUsuario(u);
-            System.out.println(datosUsuario);
-            out = """
-                {"result":"Cambios Realizados"}
-                """;
+            Message result = uc.updateUsuario(u);
+
+            String json = gson.toJson(result);
+        return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             e.printStackTrace();
             out = """
@@ -94,7 +142,7 @@ public class UsuarioRest extends Application{
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUsuario(@FormParam("idUsuario") int idUsuario) {
         String out;
-         UsuarioController uc = new UsuarioController();
+        UsuarioController uc = new UsuarioController();
         try {
             uc.deleteUsuario(idUsuario);
             out = """
@@ -108,5 +156,5 @@ public class UsuarioRest extends Application{
         }
         return Response.ok(out).build();
     }
-       
+
 }
