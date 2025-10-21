@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/src/java/patrones/cqrs/UsuarioCQRS.java</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/src/java/patrones/controlador/UsuarioController.java</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/src/java/patrones/modelo/Message.java</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/src/java/patrones/modelo/Usuario.java</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/src/java/patrones/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/src/java/patrones/rest/UsuarioRest.java</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/web/Dashboard.js</file>
+            <file>file:/C:/Users/swagc/OneDrive/Documentos/NetBeansProjects/ProyectoArquitectura/web/registro.js</file>
+        </group>
+    </open-files>
+</project-private>

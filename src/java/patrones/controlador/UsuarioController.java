@@ -6,6 +6,8 @@ import patrones.cqrs.UsuarioCQRS;
 import patrones.dao.UsuarioDAO;
 import patrones.modelo.Message;
 import patrones.modelo.Usuario;
+import patrones.viewmodel.UsrInsertExternoViewModel;
+import patrones.viewmodel.UsrPublicoExternoViewModel;
 
 /**
  *
@@ -13,38 +15,37 @@ import patrones.modelo.Usuario;
  */
 public class UsuarioController {
 
-  public Message insertUsuario(Usuario u) {
+    public Message insertUsuario(Usuario u) {
         Message validation = UsuarioCQRS.insert(u);
 
         if (!validation.isValidate()) {
             return validation;
         }
-        try {
-            UsuarioDAO.insert(u);
-            return new Message("Usuario insertado correctamente en la base de datos.", true);
-        } catch (Exception e) {
-            return new Message("Error al insertar usuario en la base de datos: " + e.getMessage(), false);
-        }
+
+        return new Message("Usuario insertado correctamente en la base de datos.", true);
     }
-  
-    public Message updateUsuario(Usuario u) {
+
+    public Message updateUsuario(Usuario u) throws SQLException {
         Message validation = UsuarioCQRS.update(u);
 
         if (!validation.isValidate()) {
             return validation;
         }
-        try {
-            UsuarioDAO.update(u);
-            return new Message("Usuario actualizado correctamente en la base de datos.", true);
-        } catch (SQLException e) {
-            return new Message("Error al actualizar usuario en la base de datos: " + e.getMessage(), false);
-        }
+        return new Message("Usuario actualizado correctamente en la base de datos.", true);
+    }
+
+    public UsrPublicoExternoViewModel registro(Usuario u) {
+        // Aquí normalmente iría la lógica de inserción, pero solo hacemos el mapeo
+        return new UsrPublicoExternoViewModel(u.getIdUsuario(), u.getNombreUsuario());
+    }
+
+    public UsrInsertExternoViewModel actualizar(Usuario u) {
+        return new UsrInsertExternoViewModel(u.getNombreUsuario(), u.getContrasenia(), u.getContrasenia());
     }
 
     public List<Usuario> getAllUsuario() throws SQLException {
         return UsuarioDAO.getUsuarios();
     }
-
 
     public Usuario getUsuarioById(int idUsuario) throws SQLException {
         return UsuarioDAO.getById(idUsuario);

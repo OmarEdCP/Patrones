@@ -1,6 +1,7 @@
 package patrones.rest;
 
 import com.google.gson.Gson;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -16,6 +17,8 @@ import java.util.List;
 import patrones.controlador.UsuarioController;
 import patrones.modelo.Message;
 import patrones.modelo.Usuario;
+import patrones.viewmodel.UsrInsertExternoViewModel;
+import patrones.viewmodel.UsrPublicoExternoViewModel;
 
 /**
  *
@@ -34,7 +37,7 @@ public class UsuarioRest extends Application {
             Usuario u = gson.fromJson(usuario, Usuario.class);
             Message result = uc.insertUsuario(u);
             String json = gson.toJson(result);
-        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -127,7 +130,7 @@ public class UsuarioRest extends Application {
             Message result = uc.updateUsuario(u);
 
             String json = gson.toJson(result);
-        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             e.printStackTrace();
             out = """
@@ -155,6 +158,50 @@ public class UsuarioRest extends Application {
                 """;
         }
         return Response.ok(out).build();
+    }
+
+    @Path("registro")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registrarUsuario(String jsonUsuario) {
+        try {
+            Gson gson = new Gson();
+            Usuario u = gson.fromJson(jsonUsuario, Usuario.class);
+
+            UsuarioController uc = new UsuarioController();
+            UsrPublicoExternoViewModel newUser = uc.registro(u);
+
+            String json = gson.toJson(newUser);
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"error\":\"Error al procesar el registro\"}")
+                    .build();
+        }
+    }
+
+    @Path("actualizar")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarUsuario(String jsonUsuario) {
+        try {
+            Gson gson = new Gson();
+            Usuario model = gson.fromJson(jsonUsuario, Usuario.class);
+
+            UsuarioController uc = new UsuarioController();
+            UsrInsertExternoViewModel updated = uc.actualizar(model);
+
+            String jsonResponse = gson.toJson(updated);
+            return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"error\":\"Error al procesar la actualización\"}")
+                    .build();
+        }
     }
 
 }

@@ -48,7 +48,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Perfil actualizado correctamente");
         localStorage.setItem("lastUser", JSON.stringify(updatedUser));
       } else {
-        alert("Error al actualizar el perfil");
+          console.log('No validate');
+        alert(data.message);
       }
     } catch (error) {
       console.error("Error al actualizar perfil:", error);
