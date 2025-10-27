@@ -164,16 +164,13 @@ public class UsuarioRest extends Application {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response registrarUsuario(String jsonUsuario) {
+    public Response registrarUsuario(String data) {
         try {
-            Gson gson = new Gson();
-            Usuario u = gson.fromJson(jsonUsuario, Usuario.class);
-
             UsuarioController uc = new UsuarioController();
-            UsrPublicoExternoViewModel newUser = uc.registro(u);
-
-            String json = gson.toJson(newUser);
-            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            Gson gson = new Gson();
+            UsrInsertExternoViewModel datos = gson.fromJson(data, UsrInsertExternoViewModel.class);
+            UsrPublicoExternoViewModel newUser = uc.registro(datos);
+            return Response.ok(gson.toJson(newUser), MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST)
@@ -186,16 +183,13 @@ public class UsuarioRest extends Application {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response actualizarUsuario(String jsonUsuario) {
+    public Response actualizarUsuario(String data) {
         try {
-            Gson gson = new Gson();
-            Usuario model = gson.fromJson(jsonUsuario, Usuario.class);
-
             UsuarioController uc = new UsuarioController();
-            UsrInsertExternoViewModel updated = uc.actualizar(model);
-
-            String jsonResponse = gson.toJson(updated);
-            return Response.ok(jsonResponse, MediaType.APPLICATION_JSON).build();
+            Gson gson = new Gson();
+            UsrInsertExternoViewModel datos = gson.fromJson(data, UsrInsertExternoViewModel.class);
+            UsrPublicoExternoViewModel updated = uc.actualizar(datos);
+            return Response.ok(gson.toJson(updated), MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST)

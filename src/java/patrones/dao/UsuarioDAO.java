@@ -13,7 +13,7 @@ import patrones.modelo.Usuario;
 public class UsuarioDAO {
 
     public static List<Usuario> getUsuarios() throws SQLException {
-        String sql = "select * from vw_UsuariosActivos";
+        String sql = "select * from Usuario";
         MySQL connMysql = new MySQL();
         Connection conn = connMysql.open();
         PreparedStatement pstmt = conn.prepareStatement(sql);
