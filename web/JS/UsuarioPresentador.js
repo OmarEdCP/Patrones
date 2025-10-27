@@ -135,5 +135,24 @@ export class UsuarioPresentador {
 
     return userData;
   }
+  
+  async getAllUsuarios() {
+  try {
+    const response = await fetch("http://localhost:8080/ProyectoArquitectura/api/usuario/getAllUsuario");
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      alert("No se pudo obtener la lista de usuarios.");
+      return;
+    }
+
+    // Mostrar los usuarios usando la vista
+    this.vista.mostrarUsuarios(data);
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error);
+    alert("Error al conectar con el servidor.");
+  }
+}
+
 }
 

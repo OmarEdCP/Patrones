@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuarios</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f9;
+        color: #333;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: #0072ff;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.5rem 1rem;
+        position: fixed;
+        height: 100vh;
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+      }
+
+      .sidebar nav a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: background 0.3s;
+        margin: 0.3rem 0;
+      }
+
+      .sidebar nav a:hover,
+      .sidebar nav a.active {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .logout-btn {
+        background: #ff4d4d;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.7rem;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: background 0.3s;
+      }
+
+      .logout-btn:hover {
+        background: #e63939;
+      }
+
+      .main {
+        margin-left: 240px;
+        padding: 1.5rem;
+        width: 100%;
+      }
+
+      .navbar {
+        background: #fff;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .navbar h1 {
+        font-size: 1.5rem;
+        color: #0072ff;
+      }
+
+      .user-info {
+        font-weight: 500;
+      }
+
+      /* ===== TABLA DE USUARIOS ===== */
+      .table-container {
+        background: #fff;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+
+      th, td {
+        padding: 0.8rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background: #0072ff;
+        color: white;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 200px;
+        }
+        .main {
+          margin-left: 200px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          flex-direction: column;
+        }
+        .sidebar {
+          position: relative;
+          width: 100%;
+          flex-direction: row;
+          justify-content: space-around;
+          height: auto;
+        }
+        .main {
+          margin-left: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <aside class="sidebar">
+      <div>
+        <h2>Mi Panel</h2>
+        <nav>
+          <a href="#">Inicio</a>
+          <a href="Dashboard.html">Perfil</a>
+          <a href="Usuarios.html" class="active">Usuarios</a>
+        </nav>
+      </div>
+      <button class="logout-btn" id="logoutBtn">Cerrar sesión</button>
+    </aside>
+
+    <main class="main">
+      <div class="navbar">
+        <h1>Usuarios registrados</h1>
+        <div class="user-info"><span id="userEmail">correo@usuario.com</span></div>
+      </div>
+
+      <section class="table-container">
+        <h2>Lista de usuarios</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre de Usuario</th>
+              <th>Correo</th>
+              <th>Estatus</th>
+            </tr>
+          </thead>
+          <tbody id="usuariosBody">
+            <!-- Se llena dinámicamente -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+      <script type="module" src="JS/UsuariosList.js"></script>
+  </body>
+</html>
